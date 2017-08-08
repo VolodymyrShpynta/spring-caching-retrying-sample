@@ -22,12 +22,12 @@ public class RecoverableService {
         }
     }
 
-    @Recover
+    @Recover //This method is invoked to try recover after all retry fail.
     public void recoverNeededException(RecoverNeededException e, String arg) {
         log.info("Recovered from exception. Arg is '{}'. Exception is '{}'", arg, e.getClass());
     }
 
-    @Recover
+    @Recover //This method is invoked to try recover after all retry fail.
     public void otherException(Exception e, String arg) throws Exception {
         log.info("Recovering failure. Arg is '{}'. Exception is '{}'", arg, e.getClass());
         throw e;
