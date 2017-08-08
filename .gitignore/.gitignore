@@ -1,9 +1,0 @@
-# IntelliJ IDEA Files
-*.iml
-*.ipr
-*.iws
-*.idea
-
-# Build Artifacts
-build/
-target/
