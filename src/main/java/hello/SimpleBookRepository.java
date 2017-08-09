@@ -1,7 +1,6 @@
 package hello;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -9,7 +8,6 @@ import org.springframework.stereotype.Component;
 public class SimpleBookRepository implements BookRepository {
 
     @Override
-    @Cacheable("books")
     public Book getByIsbn(String isbn) {
         log.info("Getting book by isbn '{}'...", isbn);
         simulateSlowService();
