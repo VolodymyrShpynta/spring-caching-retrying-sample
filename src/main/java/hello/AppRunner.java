@@ -1,5 +1,7 @@
 package hello;
 
+import hello.token.caching.Authenticator;
+import hello.token.caching.Profile;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +16,32 @@ public class AppRunner implements CommandLineRunner {
     private final RecoverableService recoverableService;
     private final BookRepository bookRepository;
     private final BookService bookService;
+    private final Authenticator authenticator;
+
+    private int i = 0;
 
     @Override
     public void run(String... args) throws Exception {
-        testBookService();
+        testTokenCaching();
+//        testBookService();
 //        testBookRepo();
 //        testRecovering();
+    }
+
+    private void testTokenCaching() {
+        final Profile profile = new Profile("name1", "address1");
+        for (int k = 0; k < 5; k++) {
+            System.out.println("Test function result: " +
+                    authenticator.run(profile,
+                    token -> {
+                        log.info("Token is '{}'", token);
+                        i++;
+                        if (i == 3) {
+                            throw new RecoverNeededException();
+                        }
+                        return "Success result";
+                    }));
+        }
     }
 
     private void testBookService() {
